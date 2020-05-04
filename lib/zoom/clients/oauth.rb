@@ -12,6 +12,29 @@ module Zoom
       def access_token
         @access_token
       end
+
+      def refresh_access_token(refresh_token)
+        url = 'https://api.zoom.us/oauth/token'
+        query = {
+          grant_type: 'refresh_token',
+          refresh_token: refresh_token
+        }
+        auth = {username: Zoom.configuration.api_key, password: Zoom.configuration.api_secret}
+        response = HTTParty.post(url, query: query, basic_auth: auth)
+        @access_token = response.parsed_response['access_token']
+        response
+      end
+
+      def self.request_access_token(code, redirect_uri)
+        url = 'https://api.zoom.us/oauth/token'
+        query = {
+          grant_type: 'authorization_code',
+          code: code,
+          redirect_uri: redirect_uri
+        }
+        auth = {username: Zoom.configuration.api_key, password: Zoom.configuration.api_secret}
+        HTTParty.post(url, query: query, basic_auth: auth)
+      end
     end
   end
 end
