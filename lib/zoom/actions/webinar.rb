@@ -8,7 +8,8 @@ module Zoom
       SETTINGS_KEYS = %i[panelists_video practice_session hd_video approval_type
                          registration_type audio auto_recording enforce_login
                          enforce_login_domains alternative_hosts close_registration
-                         show_share_button allow_multiple_devices registrants_confirmation_email].freeze
+                         show_share_button allow_multiple_devices registrants_confirmation_email
+                         meeting_authentication host_video post_webinar_survey survey_url].freeze
       def webinar_list(*args)
         params = Zoom::Params.new(Utils.extract_options!(args))
         params.require(:host_id).permit(:page_size, :page_number)
