@@ -27,7 +27,7 @@ module Zoom
       end
 
       def parse_response(http_response)
-        raise_if_error!(http_response.parsed_response) || http_response.code
+        raise_if_error!(http_response.parsed_response) || http_response.parsed_response # Return parsed response if failed to process error code.
       end
 
       def extract_options!(array)
