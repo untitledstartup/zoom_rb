@@ -5,17 +5,20 @@ require 'httparty'
 module Zoom
   class Client
     include HTTParty
-    include Actions::Token
     include Actions::Account
+    include Actions::Billing
+    include Actions::Dashboard
     include Actions::Group
     include Actions::M323Device
-    include Actions::User
     include Actions::Meeting
-    include Actions::Metrics
-    include Actions::Webinar
-    include Actions::Report
+    include Actions::Phone
     include Actions::Recording
+    include Actions::Report
     include Actions::Roles
+    include Actions::SipAudio
+    include Actions::Token
+    include Actions::User
+    include Actions::Webinar
     include Actions::IM::Chat
     include Actions::IM::Group
 
@@ -40,6 +43,10 @@ module Zoom
       {
         'Authorization' => "Bearer #{access_token}"
       }.merge(headers)
+    end
+
+    def auth_token
+      Base64.encode64("#{ENV['ZOOM_APP_CLIENT_ID']}:#{ENV['ZOOM_APP_SECRET']}").delete("\n")
     end
   end
 end
